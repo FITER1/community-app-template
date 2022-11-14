@@ -9,6 +9,7 @@
             scope.staffData = {};
             scope.fieldOfficers = [];
             scope.savingaccountdetails = [];
+            scope.transactions = [];
             scope.isDebit = function (savingsTransactionType) {
                 return savingsTransactionType.withdrawal == true || savingsTransactionType.feeDeduction == true
                     || savingsTransactionType.overdraftInterest == true || savingsTransactionType.withholdTax == true || savingsTransactionType.amountHold == true;
@@ -32,6 +33,37 @@
                     scope.savingaccountdetails.transactions[i][dateFieldName] = new Date(scope.savingaccountdetails.transactions[i].date);
                 }
             };
+            scope.transactionsPerPage = 15;
+
+            scope.getResultsPage = function (pageNumber) {
+                if(scope.searchText){
+                    var startPosition = (pageNumber - 1) * scope.transactionsPerPage;
+                    scope.transactions = scope.savingaccountdetails.transactions.slice(startPosition, startPosition + scope.transactionsPerPage);
+                    return;
+                }
+                resourceFactory.savingsResource.get({accountId: routeParams.id, associations: 'all',
+                 offset: ((pageNumber - 1) * scope.transactionsPerPage),
+                 limit: scope.clientsPerPage
+                 }, function (data) {
+                 scope.savingaccountdetails = data;
+                 scope.transactions = scope.savingaccountdetails.transactions;
+                   });
+              }
+
+             scope.initPage = function () {
+             resourceFactory.savingsResource.get({accountId: routeParams.id, associations: 'all',
+             offset: 0,
+             limit: scope.transactionsPerPage
+             }, function (data) {
+             scope.savingaccountdetails = data;
+             scope.totalTransactions = scope.savingaccountdetails.transactionSize;
+             scope.transactions = scope.savingaccountdetails.transactions;
+               });
+
+            }
+
+            scope.initPage();
+
             scope.isRecurringCharge = function (charge) {
                 return charge.chargeTimeType.value == 'Monthly Fee' || charge.chargeTimeType.value == 'Annual Fee' || charge.chargeTimeType.value == 'Weekly Fee';
             }
