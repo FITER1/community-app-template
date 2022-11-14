@@ -360,6 +360,8 @@ define(['Q', 'underscore', 'mifosX'], function (Q) {
             'savings/AddNewMemberToGSIMController',
             'client/AddBusinessOwnersController',
             'client/EditBusinessOwnersController',
+            'client/AddEmploymentInfoController',
+            'client/EditEmploymentInfoController',
             'client/BusinessOwnerDocumentController',
         ],
         filters: [

@@ -34,6 +34,7 @@
             {
                 scope.enableAddress=data.isAddressEnabled;
                 scope.businessOwnerEnabled=data.isBusinessOwnerEnabled;
+                scope.employmentInfoEnabled=data.isEmploymentInfoEnabled;
                 if(scope.enableAddress===true)
                 {
 
@@ -55,6 +56,7 @@
                     {
 
                         scope.addresses=data;
+                        console.log(data);
 
 
                     })
@@ -151,6 +153,15 @@
                  });
             }
 
+            scope.ChangeEmploymentInfoStatus=function(id,status, employmentInfoId)
+            {
+                formdata.isActive=!status
+                resourceFactory.employmentInfoStatus.get({clientId:routeParams.id, employmentInfoId:employmentInfoId, status: formdata.isActive},function(data)
+                 {
+                     route.reload();
+                 });
+            }
+
             scope.deleteFamilyMember=function(clientFamilyMemberId)
             {
 
@@ -182,6 +193,11 @@
 
             }
 
+            scope.editEmploymentInfo=function(employmentInfoId)
+            {
+               location.path('/editEmploymentInfo/'+routeParams.id+'/'+employmentInfoId);
+            }
+
             scope.routeToaddFamilyMember=function()
             {
                 location.path('/addfamilymembers/'+ routeParams.id);
@@ -194,7 +210,14 @@
             {
                 location.path('/addBusinessOwners/'+ routeParams.id);
             }
-
+            scope.routeToAddEmploymentInfo=function()
+            {
+                location.path('/addEmploymentInfo/'+ routeParams.id);
+            }
+            resourceFactory.employmentInformation.get({clientId:routeParams.id},function(data)
+              {
+                scope.employmentInfo=data;
+              });
 
             scope.routeToLoan = function (id) {
                 location.path('/viewloanaccount/' + id);
@@ -1249,6 +1272,53 @@
                 $scope.cancel = function () {
                     $uibModalInstance.dismiss('cancel');
                 };
+            };
+
+            resourceFactory.creditBureauTemplate.get(function (data) {
+                scope.creditbureaus = data;
+                scope.creditbureauname = scope.creditbureaus.creditBureauName;
+
+            });
+
+            scope.getcreditreport = function(creditBureauId) {
+                scope.creditbureau = creditBureauId;
+               if (creditBureauId == 1) { //id 1 is assigned for ThitsaWorks CreditBureau
+                    location.path('/creditreport/thitsaworkCreditbureau/'+scope.creditbureau);
+                }
+               else{
+                   alert("Please Select Respective integrated Credit Bureau");
+               }
+            };
+
+            scope.onFileSelect = function (files) {
+                scope.formData.file = files[0];
+            };
+
+            scope.upload = function () {
+                Upload.upload({
+                    url: $rootScope.hostUrl + API_VERSION + '/creditBureauIntegration/addCreditReport?creditBureauId=1',
+                    data: {file: scope.formData.file},
+                }).then(function (data) {
+                    if (!scope.$$phase) {
+                        scope.$apply();
+                    }
+                });
+            };
+
+            scope.uploadReport = function (creditBureauId) {
+                scope.creditbureau = creditBureauId;
+                if (creditBureauId == 1) {
+                    location.path('/creditreport/thitsaworkUploadCreditbureau/' + routeParams.id +'/'+ scope.creditbureau);
+                }
+            };
+
+            scope.downloadCreditReport = function (creditBureauId) {
+                scope.creditbureau = creditBureauId;
+                if (creditBureauId == 1) { //id 1 is assigned for ThitsaWorks CreditBureau
+                    location.path('/creditreport/thitsaworkDownloadCreditbureau/' + routeParams.id +'/'+ scope.creditbureau);
+                }else{
+                    alert("Please Select Respective integrated Credit Bureau");
+                }
             };
 
             resourceFactory.creditBureauTemplate.get(function (data) {
