@@ -265,6 +265,11 @@
                                         <li data-ng-show="client.status.value=='Active'">
 											<a href="#/createshareaccount/{{client.id}}" has-permission='CREATE_SHAREACCOUNT'>{{'label.button.newshareaccount' | translate}}</a>
 										</li>
+
+										<li data-ng-show="client.status.value=='Active'">
+											<a href="#/createclientcollateral/{{client.id}}" has-permission='CREATE_COLLATERAL'>{{'label.button.createcollateral' | translate}}</a>
+										</li>
+
 										<li data-ng-show="client.status.value=='Active'">
 											<a href="#/newclientfixeddepositaccount/{{client.id}}" has-permission='CREATE_FIXEDDEPOSITACCOUNT'>{{'label.newfixeddepositaccount' | translate}}</a>
 										</li>
@@ -519,6 +524,41 @@
 											</td>
 										</tr>
 									</table>
+								</div>
+								<!-- Collateral Overview -->
+								<div data-ng-show="collateralSize != 0">
+									<div class="pull-right">
+										<span>
+											<button type="button" data-ng-click="viewCollaterals()"
+													class="btn-primary btn btn-sm">
+												{{ 'label.button.viewcollaterals' | translate }}
+											</button>
+										</span>
+									</div>
+									<div class="span gray-head">
+										<span class="boldlabel">
+											<strong>{{'label.heading.collaterals' | translate }}</strong>
+										</span>
+								    </div>
+								<table class="table table-condensed">
+									<tr class="graybg">
+										<th>{{'label.heading.id' | translate}}</th>
+										<th>{{'label.heading.name' | translate}}</th>
+										<th>{{'label.heading.quantity' | translate}}</th>
+										<th>{{'label.heading.totalValue' | translate}}</th>
+										<th>{{'label.heading.totalCollateralValue' | translate}}</th>
+									</tr>
+									<tr class="pointer-main"
+										ng-repeat="collateral in client.clientCollateralManagements">
+										<td class="pointer" data-ng-click="routeToCollateral(collateral.id)">
+											{{collateral.id}}
+										</td>
+										<td class="pointer" data-ng-click="routeToCollateral(collateral.name)">{{collateral.name}}</td>
+										<td class="pointer" data-ng-click="routeToCollateral(collateral.id)">{{collateral.quantity}}</td>
+										<td class="pointer" data-ng-click="routeToCollateral(collateral.id)">{{collateral.total}}</td>
+										<td class="pointer center" data-ng-click="routeToCollateral(collateral.id)">{{collateral.totalCollateral}}</td>
+									</tr>
+								</table>
 								</div>
                                 <!-- Fixed deposits overview -->
                                 <div data-ng-show="showFixed">
@@ -1538,8 +1578,8 @@
 					  <object height="60%" width="70%" ng-show="preview" data="{{fileUrl}}" type="{{fileType}}"></object>
 				  </div>
 				</uib-tab>
-				<uib-tab heading="{{clientdatatable.registeredTableName}}" ng-repeat="clientdatatable in clientdatatables"
-						 select="dataTableChange(clientdatatable)" has-permission='READ_{{clientdatatable.registeredTableName}}'>
+				<uib-tab heading="{{clientdatatable.registeredTableName}}" ng-repeat="clientdatatable in clientdatatables | filter:entitySubTypeFilter"
+						 select="dataTableChange(clientdatatable)" has-permission='READ_{{clientdatatable.registeredTableName}}' >
 					<api-validate></api-validate>
 					<div>
 						<div data-ng-hide="isClosedClient" class="btn-group pull-right">
@@ -1608,7 +1648,33 @@
 						</blockquote>
 					</div>
 				</uib-tab>
-			</uib-tabset>
-		</div>
-	</div>
-</div>
+				<uib-tab heading="{{ 'label.heading.creditreportcheck' | translate }}" has-permission='READ_CLIENTNOTE'>
+					<form class="form">
+						<div class="form-group">
+							<tr>
+								<td class="width5">
+									<label>{{ 'label.input.creditbureau' | translate }}
+										<span class="required">*</span>:
+									</label>
+								</td><td class="width5 paddedbottom20">
+								<select chosen="creditbureaus" id="orgcreditbureau" ng-model="creditBureauId"  class="form-control"
+										ng-options="creditbureau.creditBureauId as creditbureau.creditBureauSummary for creditbureau in creditbureaus"
+										value="creditBureauId"></select>
+							</td>
+							</tr>
+							<tr>
+								<td>
+								<a id="creditcheck" class="btn btn-default" ng-click="getcreditreport(creditBureauId)">{{'label.button.creditcheck' | translate}}</a>
+								</td>
+								<td>
+									<a id="uploadcreditreport" class="btn btn-default" ng-click="uploadReport(creditBureauId)">{{'label.button.upload' | translate}}</a>
+								</td>
+                                </tr>
+                            </div>
+                        </form>
+
+                    </uib-tab>
+                </uib-tabset>
+            </div>
+        </div>
+    </div>
