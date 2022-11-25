@@ -1,0 +1,22 @@
+# Trigger deployment only on push to fiter/latam/dev branch
+name: Mifos Build and Deploy to Amazon ECS
+
+on:
+  push:
+    branches: [ "fiter/latam/dev" ]
+
+jobs:
+  deploy:
+    name: Deploy to EC2 on fiter/latam/dev branch push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the files
+        uses: actions/checkout@v2
+
+    - name: Deploy to EC2 instance
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.LATAM_EC2_SSH_KEY }}
+          REMOTE_HOST: ${{ secrets.LATAM_REMOTE_HOST }}
+          REMOTE_USER: ${{ secrets.LATAM_REMOTE_USER }}
