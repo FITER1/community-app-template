@@ -1,18 +1,22 @@
 # Trigger deployment only on push to fiter/latam/dev branch
-name: Mifos Build and Deploy to Amazon ECS
+name: Latam Mifos Build and Deploy
 
 on:
   push:
     branches: [ "fiter/latam/dev" ]
 
 jobs:
+
   deploy:
-    name: Deploy to EC2 on fiter/latam/dev branch push
+
+    name: Build and Deploy to EC2
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout the files
+      - name: Check out code
         uses: actions/checkout@v2
+
+      - uses: kamiazya/setup-graphviz@v1
 
     - name: Deploy to EC2 instance
         uses: easingthemes/ssh-deploy@main
