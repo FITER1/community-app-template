@@ -1,26 +1,42 @@
 # Trigger deployment only on push to fiter/latam/dev branch
 name: Latam Mifos Build and Deploy
-
-on:
+'on':
   push:
-    branches: [ "fiter/latam/dev" ]
-
+    branches:
+      - fiter/latam/dev
 jobs:
-
-  deploy:
-
-    name: Build and Deploy to EC2
+  continuous-integration:
     runs-on: ubuntu-latest
-
     steps:
       - name: Check out code
         uses: actions/checkout@v2
-
-      - uses: kamiazya/setup-graphviz@v1
-
-    - name: Deploy to EC2 instance
-        uses: easingthemes/ssh-deploy@main
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.LATAM_EC2_SSH_KEY }}
-          REMOTE_HOST: ${{ secrets.LATAM_REMOTE_HOST }}
-          REMOTE_USER: ${{ secrets.LATAM_REMOTE_USER }}
+      - name: 'Use Node.js ${{ matrix.node-version }}'
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.x
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7
+          bundler-cache: true
+      - name: Install Grunt and bower
+        run: |
+          npm install -g bower
+          npm install -g grunt-cli
+      - name: Install Dependecies Using bower
+        run: |
+          bower install
+      - name: Install Node dependencies
+        run: |
+          npm install
+          npm install grunt-contrib-compass --save-dev
+      - name: Install Gem dependencies
+        run: |
+          gem install bundler
+          gem install compass
+          bundle install 
+          ls
+      - name: Run tests with coverage
+        run: |
+          grunt test --code-coverage 
+          ls
