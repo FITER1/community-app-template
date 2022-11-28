@@ -11,7 +11,8 @@ COPY . /usr/src/app
 RUN bower --allow-root install
 RUN npm install
 RUN bundle install
-RUN grunt prod
+RUN grunt test --code-coverage
+RUN grunt dev
 
 FROM nginx:1.19.3
 COPY --from=builder /usr/src/app/dist/community-app /usr/share/nginx/html
