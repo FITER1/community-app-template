@@ -3,7 +3,7 @@ name: Latam Dev Sonar Analysis
 on:
   push:
     branches:
-      - [ "fiter/latam/dev" ]
+      - fiter/latam/dev
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:

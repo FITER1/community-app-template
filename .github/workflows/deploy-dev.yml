@@ -3,7 +3,7 @@ name: Latam Mifos Build and Deploy
 'on':
   push:
     branches:
-      - [ "fiter/africa/dev" ]
+      - fiter/latam/dev
 jobs:
   continuous-integration:
     runs-on: ubuntu-latest
