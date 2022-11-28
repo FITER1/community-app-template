@@ -1,8 +1,8 @@
 name: Latam Mifos Dev CI/CD
-'on':
+on:
   push:
     branches:
-      - [ fiter/latam/dev ]
+      - fiter/latam/dev
 jobs:
   continuous-integration:
     runs-on: ubuntu-latest
