@@ -1,53 +1,49 @@
-# Trigger deployment only on push to fiter/latam/dev branch
-name: Latam Mifos Build and Deploy
+name: Latam Mifos Dev CI/CD
 'on':
   push:
     branches:
-      - fiter/latam/dev
+      - [ fiter/latam/dev ]
 jobs:
   continuous-integration:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
         uses: actions/checkout@v2
-      - name: 'Use Node.js ${{ matrix.node-version }}'
-        uses: actions/setup-node@v1
+
+      - uses: kamiazya/setup-graphviz@v1
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          node-version: 16.x
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 2.7
-          bundler-cache: true
-      - name: Install Grunt and bower
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_united_cap }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_united_cap }}
+          aws-region: us-east-2
+
+      - id: commit
+        uses: pr-mpt/actions-commit-hash@v1
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build, tag, and push image to Amazon ECR
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: latam frontend
+          IMAGE_TAG: ${{ steps.commit.outputs.short }}
         run: |
-          npm install -g bower
-          npm install -g grunt-cli
-      - name: Install Dependecies Using bower
-        run: |
-          bower install
-      - name: Install Node dependencies
-        run: |
-          npm install
-          npm install grunt-contrib-compass --save-dev
-      - name: Install Gem dependencies
-        run: |
-          gem install bundler
-          gem install compass
-          bundle install 
-          ls
-      - name: Run tests with coverage
-        run: |
-          grunt test --code-coverage 
-          ls
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
   continuous-deployment:
     runs-on: ubuntu-latest
-    needs: [continuous-integration]
     steps:
-      - name: Deploy to EC2 instance
-        uses: easingthemes/ssh-deploy@main
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.LATAM_EC2_SSH_KEY }}
-          REMOTE_HOST: ${{ secrets.LATAM_REMOTE_HOST }}
-          REMOTE_USER: ${{ secrets.LATAM_REMOTE_USER }}
+      - name: executing remote ssh commands using ssh key
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.LATAM_REMOTE_HOST }}
+          username: ${{ secrets.LATAM_REMOTE_USER }}
+          key: ${{ secrets.LATAM_EC2_SSH_KEY }}
+          script: |
+            docker pull 916148231619.dkr.ecr.us-east-2.amazonaws.com/latam frontend:${{ env.IMAGE_TAG }}
+            docker run -p 80:80 -d latam-frontend:${{ env.IMAGE_TAG }}
