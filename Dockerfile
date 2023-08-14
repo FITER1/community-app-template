@@ -11,9 +11,9 @@ COPY . /usr/src/app
 RUN bower --allow-root install
 RUN npm install
 RUN bundle install
-RUN grunt prod
+RUN grunt prod 
 
-FROM nginx:1.19.3
+FROM nginx:1.25.1
 COPY --from=builder /usr/src/app/dist/community-app /usr/share/nginx/html
-EXPOSE 80
+EXPOSE 80 443
 CMD ["nginx", "-g", "daemon off;"]
