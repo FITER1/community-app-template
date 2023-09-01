@@ -150,8 +150,8 @@
                     scope.formData.syncRepaymentsWithMeeting = true;
                     scope.formData.syncDisbursementWithMeeting = true;
                 }
-                scope.multiDisburseLoan = scope.loanaccountinfo.multiDisburseLoan;
-                scope.formData.productId = scope.loanaccountinfo.loanProductId;
+                scope.multiDisburseLoan = scope.loanaccountinfo.product.multiDisburseLoan;
+                scope.formData.productId = scope.loanaccountinfo.product.id;
                 scope.formData.fundId = scope.loanaccountinfo.fundId;
                 scope.formData.principal = scope.loanaccountinfo.principal;
                 scope.formData.loanTermFrequency = scope.loanaccountinfo.termFrequency;
@@ -176,6 +176,7 @@
                 scope.formData.graceOnInterestPayment = scope.loanaccountinfo.graceOnInterestPayment;
                 scope.formData.graceOnArrearsAgeing = scope.loanaccountinfo.graceOnArrearsAgeing;
                 scope.formData.transactionProcessingStrategyId = scope.loanaccountinfo.transactionProcessingStrategyId;
+                scope.formData.transactionProcessingStrategyCode = scope.loanaccountinfo.product.transactionProcessingStrategyCode;
                 scope.loandetails.transactionProcessingStrategyValue = scope.formValue(scope.loanaccountinfo.transactionProcessingStrategyOptions,scope.formData.transactionProcessingStrategyId,'id','name');
                 scope.formData.graceOnInterestCharged = scope.loanaccountinfo.graceOnInterestCharged;
                 scope.formData.fixedEmiAmount = scope.loanaccountinfo.fixedEmiAmount;

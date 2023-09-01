@@ -281,9 +281,9 @@
                 <td ng-hide="response.uiDisplayConfigurations.loanAccount.isHiddenField.transactionProcessingStrategyId == true"><label>{{ 'label.input.repaymentstrategy' | translate }}&nbsp;<span
                         class="required">*</span></label></td>
                 <td class="paddedbottom10" ng-hide="response.uiDisplayConfigurations.loanAccount.isHiddenField.transactionProcessingStrategyId == true">
-                    <select id="transactionProcessingStrategyId" ng-model="formData.transactionProcessingStrategyId" class="form-control width170px"
-                            ng-options="transactionProcessingStrategy.id as transactionProcessingStrategy.name for transactionProcessingStrategy in loanaccountinfo.transactionProcessingStrategyOptions"
-                            value="{{transactionProcessingStrategy.id}}" ng-disabled="!loanaccountinfo.product.allowAttributeOverrides.transactionProcessingStrategyId"/>
+                    <select id="transactionProcessingStrategyCode" ng-model="formData.transactionProcessingStrategyCode" class="form-control width170px"
+                            ng-options="transactionProcessingStrategy.code as transactionProcessingStrategy.name for transactionProcessingStrategy in loanaccountinfo.transactionProcessingStrategyOptions"
+                            value="{{transactionProcessingStrategy.code}}" ng-disabled="!loanaccountinfo.product.allowAttributeOverrides.transactionProcessingStrategyId"/>
                 </td>
                 <td colspan=2 class="paddedbottom10">
                     <label>{{ 'label.input.grace' | translate }}&nbsp;{{'label.input.onprincipalpayment' | translate}}</label>&nbsp;<input

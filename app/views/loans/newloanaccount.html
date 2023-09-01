@@ -372,9 +372,9 @@
                                 </label>
                             </td>
                             <td class="paddedbottom20" ng-hide="response.uiDisplayConfigurations.loanAccount.isHiddenField.transactionProcessingStrategyId == true">
-                                <select id="transactionProcessingStrategyId" ng-model="formData.transactionProcessingStrategyId" ng-change="loandetails.transactionProcessingStrategyValue = formValue(loanaccountinfo.transactionProcessingStrategyOptions,formData.transactionProcessingStrategyId,'id','name')"
-                                    ng-options="transactionProcessingStrategy.id as transactionProcessingStrategy.name for transactionProcessingStrategy in loanaccountinfo.transactionProcessingStrategyOptions"
-                                    value="{{transactionProcessingStrategy.id}}" ng-disabled="!loanaccountinfo.product.allowAttributeOverrides.transactionProcessingStrategyId"
+                                <select id="transactionProcessingStrategyCode" ng-model="formData.transactionProcessingStrategyCode" ng-change="loandetails.transactionProcessingStrategyValue = formValue(loanaccountinfo.transactionProcessingStrategyOptions,formData.transactionProcessingStrategyCode,'code','name')"
+                                    ng-options="transactionProcessingStrategy.code as transactionProcessingStrategy.name for transactionProcessingStrategy in loanaccountinfo.transactionProcessingStrategyOptions"
+                                    value="{{transactionProcessingStrategy.code}}" ng-disabled="!loanaccountinfo.product.allowAttributeOverrides.transactionProcessingStrategyId"
                                     class="form-control width170px"></select>
                             </td>
                             <td colspan=2>

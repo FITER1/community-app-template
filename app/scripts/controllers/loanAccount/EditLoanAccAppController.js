@@ -165,7 +165,7 @@
                 scope.formData.graceOnPrincipalPayment = scope.loanaccountinfo.graceOnPrincipalPayment;
                 scope.formData.graceOnInterestPayment = scope.loanaccountinfo.graceOnInterestPayment;
                 scope.formData.graceOnArrearsAgeing = scope.loanaccountinfo.graceOnArrearsAgeing;
-                scope.formData.transactionProcessingStrategyId = scope.loanaccountinfo.transactionProcessingStrategyId;
+                scope.formData.transactionProcessingStrategyCode = scope.loanaccountinfo.transactionProcessingStrategyCode;
                 scope.formData.graceOnInterestCharged = scope.loanaccountinfo.graceOnInterestCharged;
                 scope.formData.syncDisbursementWithMeeting = scope.loanaccountinfo.syncDisbursementWithMeeting;
                 scope.formData.fixedEmiAmount = scope.loanaccountinfo.fixedEmiAmount;
