@@ -46,28 +46,6 @@
                     </div>
                 </div>
 
-                <div ng-show="resetPassword">
-                    <form class="form-inline pull-right" role="form">
-                        <label><strong>{{ 'label.message.password.expired' | translate }}</strong></label>
-
-                        <div class="form-group">
-                            <input type="password" data-ng-model="passwordDetails.password"
-                                   placeholder="{{ 'label.input.password' | translate }}" class="input-sm form-control"
-                                   required
-                                   id="password">
-                        </div>
-                        <div class="form-group">
-                            <input type="password" data-ng-model="passwordDetails.repeatPassword"
-                                   placeholder="{{ 'label.input.repeatpassword' | translate }}"
-                                   class="input-sm form-control"
-                                   required id="repeatPassword">
-                        </div>
-                        <button class="btn btn-success" type="submit" data-ng-click="updatePassword()"
-                                id="updatepassword-button">{{ 'label.button.resetPassword' | translate }}
-                        </button>
-                    </form>
-                </div>
-
             </div>
 
 
@@ -84,6 +62,30 @@
                 <hr>
 
                 <div data-ng-form="loginForm">
+
+                    <div class="row" ng-show="resetPassword">
+                        <div class="col-sm-4 col-sm-offset-4">
+                        <form class="form" role="form">
+                            <label><strong>{{ 'label.message.password.expired' | translate }}</strong></label>
+    
+                            <div class="form-group">
+                                <input type="password" data-ng-model="passwordDetails.password"
+                                       placeholder="{{ 'label.input.password' | translate }}" class="input-sm form-control"
+                                       required
+                                       id="password">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" data-ng-model="passwordDetails.repeatPassword"
+                                       placeholder="{{ 'label.input.repeatpassword' | translate }}"
+                                       class="input-sm form-control"
+                                       required id="repeatPassword">
+                            </div>
+                            <button class="btn btn-success" type="submit" data-ng-click="updatePassword()"
+                                    id="updatepassword-button">{{ 'label.button.resetPassword' | translate }}
+                            </button>
+                        </form>
+                        </div>
+                    </div>
 
                     <div class="row" ng-hide="resetPassword || twoFactorRequired">
                         <div class="col-sm-4 col-sm-offset-4">
