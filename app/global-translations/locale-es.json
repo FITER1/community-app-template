@@ -4046,5 +4046,6 @@
 	"label.heading.unblockuser": "¿Confirmar el desbloqueo?",
 	"label.input.blockdays": "Días de bloqueo",
 	"validation.msg.user.blockDays.not.greater.than.zero": "El nro. de días de bloqueo debe ser mayor a cero.",
+	"error.msg.user.locked.out": "Su cuenta de usuario ha sido bloqueada. Por favor contacte al administrador.",
 	"----End---": "---Fin del archivo---"
 }

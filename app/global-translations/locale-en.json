@@ -4424,5 +4424,6 @@
   "label.heading.unblockuser": "Confirm Unblock?",
   "label.input.blockdays": "Block Days",
   "validation.msg.user.blockDays.not.greater.than.zero": "Block days should be greater than zero.",
+  "error.msg.user.locked.out": "Your account has been blocked. Please contact admin for assistance.",
   "----End---": "--End of file--- "
 }

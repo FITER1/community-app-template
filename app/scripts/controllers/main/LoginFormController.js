@@ -27,7 +27,10 @@
             scope.$on("UserAuthenticationFailureEvent", function (event, data, status) {
                 delete scope.loginCredentials.password;
                 scope.authenticationFailed = true;
-                if(status != 401) {
+                if(status == 403) {
+                    scope.authenticationErrorMessage = 'error.msg.user.locked.out';
+                    scope.load = false;
+                } else if(status != 401) {
                     scope.authenticationErrorMessage = 'error.connection.failed';
                     scope.load = false;
                 } else {
