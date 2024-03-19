@@ -4645,6 +4645,6 @@
   "task.status.blocked": "BLOCKED",
   "task.status.progress": "IN PROGRESS",
   "task.status.completed": "COMPLETED",
-  "validation.msg.user.password.does.not.match.regexp": "Password must contain at least 8 characters, including UPPER/lowercase/Special character and numbers",
+  "validation.msg.user.password.does.not.match.regexp": "Password must contain at least 8 characters, including UPPER/lowercase/Special character and numbers ",
   "----End---": "--End of file--- "
 }
