@@ -33,6 +33,8 @@
             scope.allowAttributeConfiguration = true;
             scope.interestRecalculationOnDayTypeOptions = [];
             scope.translate = translate;
+            scope.isShariahCompliant = false;
+
             //Rates
             scope.rates = [];
             scope.rateFlag = false;

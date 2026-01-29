@@ -103,6 +103,19 @@
                     </label>
                 </div>
             </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">{{ 'label.input.isShariahCompliant' | translate }}
+                            <i class="fa fa-question-circle "
+                               uib-tooltip="{{'label.tooltip.loanproduct.isShariahCompliant' | translate}}"
+                               tooltip-append-to-body="true"></i>
+                        </label>
+                    <div class="checkbox col-sm-2">
+                        <label>
+                            <input type="checkbox" ng-model="formData.isShariahCompliant" ng-true-value="true" ng-false-value="false">
+                        </label>
+                    </div>
+                    </div>
+
                     <hr>
                     <button class = "btn btn-default pull-left" wz-previous disabled><i class = "fa fa-arrow-left"></i>&nbsp;&nbsp;Previous</button>
                     <button class = "btn btn-default pull-right" type="submit">Next&nbsp;&nbsp;<i class = "fa fa-arrow-right"></i></button>

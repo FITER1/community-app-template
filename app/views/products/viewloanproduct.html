@@ -40,6 +40,10 @@
     <td>{{'label.heading.fundname' | translate}}:</td>
     <td colspan="3">{{loanproduct.fundName}}</td>
 </tr>
+<tr ng-show="loanproduct.shortName">
+     <td>{{'label.input.isShariahCompliant' | translate}} :</td>
+     <td colspan="3">{{loanproduct.isShariahCompliant}}</td>
+</tr>
 <tr ng-show="loanproduct.startDate">
     <td>{{'label.heading.startdate' | translate}}:</td>
     <td colspan="3">{{loanproduct.startDate | DateFormat}}</td>
